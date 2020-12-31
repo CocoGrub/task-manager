@@ -1,31 +1,58 @@
 import React from 'react';
+import { NavLink } from 'react-router-dom';
 
-const NavBar=()=>{
-    return (
-        <nav class="navbar navbar-expand-lg navbar-light bg-light">
-        <div class="container-fluid">
-          <a class="navbar-brand" href="#">Navbar</a>
-          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-          </button>
-          <div class="collapse navbar-collapse" id="navbarNav">
-            <ul class="navbar-nav">
-              <li class="nav-item">
-                <a class="nav-link active" aria-current="page" href="#">Home</a>
+const NavBar = ({ isLogin, logMeOut }) => {
+  return (
+    <nav className="navbar navbar-expand-lg navbar-light bg-light">
+      <div className="container-fluid">
+        <NavLink to="/" className="navbar-brand">
+          Home
+        </NavLink>
+        <button
+          className="navbar-toggler"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#navbarNav"
+          aria-controls="navbarNav"
+          aria-expanded="false"
+          aria-label="Toggle navigation">
+          <span className="navbar-toggler-icon"></span>
+        </button>
+        <div className="collapse navbar-collapse" id="navbarNav">
+          <ul className="navbar-nav">
+            <li className="nav-item">
+              <NavLink
+                to="/taskEdit"
+                activeClassName="active"
+                className="nav-link"
+                aria-current="page">
+                Добавить задачу
+              </NavLink>
+            </li>
+            {!isLogin ? (
+              <li className="nav-item">
+                <NavLink
+                  to="/logIn"
+                  activeClassName="active"
+                  className="nav-link"
+                  aria-current="page">
+                  Войти
+                </NavLink>
               </li>
-              <li class="nav-item">
-                <a class="nav-link" href="#">Features</a>
+            ) : (
+              <li className="nav-item">
+                <div className="nav-link" onClick={logMeOut}>
+                  Выйти
+                </div>
               </li>
-              <li class="nav-item">
-                <a class="nav-link" href="#">Pricing</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a>
-              </li>
-            </ul>
-          </div>
+            )}
+
+            <li className="nav-item"></li>
+            <li className="nav-item"></li>
+          </ul>
         </div>
-      </nav>
-    )
-}
-export default NavBar
+      </div>
+    </nav>
+  );
+};
+export default NavBar;

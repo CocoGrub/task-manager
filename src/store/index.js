@@ -4,6 +4,8 @@ import thunk from 'redux-thunk';
 
 
 const inintialState = {
+    loginError:false,
+    isLogin:false,
     total_task_count:0,
     items: [
     { email:'',text:'',status:'' },
@@ -29,6 +31,20 @@ const tasksList = (state = inintialState, { type, payload }) => {
         ...state,
         items: payload.tasks,
         filter: {...state.filter,page:payload.page} }
+    case 'LOGIN':
+      return {
+        ...state,
+        isLogin:true,
+        loginError:false
+    }
+    case 'LOG_OUT':
+      return {
+        ...state,
+        isLogin:false }
+    case 'LOG_IN_ERROR':
+      return {
+        ...state,
+        loginError:true}
     default:
       return state;
   }
