@@ -1,4 +1,4 @@
-import {GET_TASKS,CREATE_TASK,LOGIN} from '../api/'
+import {GET_TASKS,CREATE_TASK,LOGIN,EDIT_TASK} from '../api/'
 
 export const getTasksAsync= (sort_field,sort_direction,page)=>async(dispatch)=>{
     try {
@@ -31,7 +31,6 @@ export const logInAsync= (data)=>async(dispatch)=>{
                 payload:true
             })
         }
-        
     } catch (error) {
         console.log(error);
     }   
@@ -44,9 +43,20 @@ export const relogIn=()=>(dispatch)=>{
     })
 }
 export const logOut=()=>(dispatch)=>{
-    
     localStorage.removeItem("token")
     dispatch({
         type:"LOG_OUT"
     })
+}
+
+export const editTaskAsync=(text,status)=>async(dispatch)=>{
+    try {
+        const res = await EDIT_TASK({
+            token:localStorage.getItem("token"),
+            text,
+            status
+        })
+    } catch (error) {
+        
+    }
 }

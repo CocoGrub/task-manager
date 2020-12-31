@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-const LogIn = ({ logIn }) => {
+const LogInForm = ({ logIn }) => {
   const [form, setFormdata] = useState({
     username: '',
     password: '',
@@ -17,31 +17,31 @@ const LogIn = ({ logIn }) => {
   return (
     <div>
       <form onSubmit={onSubmit}>
-        <div class="form-group">
-          <label for="username">Имя пользователя</label>
+        <div className="form-group">
+          <label htmlFor="username">Имя пользователя</label>
           <input
             value={username}
             onChange={onChange}
             type="text"
-            class="form-control"
+            className="form-control"
             name="username"
             aria-describedby="username"
             placeholder="введите имя пользователя"
           />
         </div>
-        <div class="form-group">
-          <label for="email">Пароль</label>
+        <div className="form-group">
+          <label htmlFor="email">Пароль</label>
           <input
             value={password}
             onChange={onChange}
             type="password"
-            class="form-control"
+            className="form-control"
             name="password"
             aria-describedby="password"
             placeholder="Введите пароль"
           />
         </div>
-        <button type="submit" class="btn btn-primary">
+        <button type="submit" className="btn btn-primary">
           Отправить
         </button>
       </form>
@@ -49,4 +49,4 @@ const LogIn = ({ logIn }) => {
   );
 };
 
-export default LogIn;
+export default LogInForm;

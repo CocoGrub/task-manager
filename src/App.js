@@ -1,12 +1,13 @@
 import './App.css';
 import CardList from '../src/components/CardList';
 import NavBar from '../src/components/NavBar';
-import {getTasksAsync,createTaskAsync,logInAsync,relogIn,logOut} from '../src/store/actions'
+import {getTasksAsync,createTaskAsync,logInAsync,relogIn,logOut,editTaskAsync} from '../src/store/actions'
 import React,{useEffect} from 'react'
 import {useDispatch,useSelector} from 'react-redux'
 import Pagination from '../src/components/Pagination'
-import TaskEdit from './components/TaskEdit'
-import LogIn from './components/LogIn'
+import AddTask from './components/AddTask'
+import EditTask from './components/EditTask'
+import LogInForm from './components/LogInForm'
 import {
   BrowserRouter as Router,
   Switch,
@@ -15,8 +16,12 @@ import {
 
 function App() {
   const dispatch = useDispatch()
+  useEffect(() => {
+    dispatch(getTasksAsync())
+  }, [])
   const itemsTotal = useSelector(state => state.total_task_count)
   const isLogin = useSelector(state => state.isLogin)
+  const items = useSelector((state) => state.items);
   const {sort_field,sort_direction,page} = useSelector(state => state.filter)
   const setPage=(page)=>{
     dispatch(getTasksAsync(sort_field,sort_direction,page))
@@ -37,24 +42,28 @@ function App() {
   const logMeOut=()=>{
     dispatch(logOut())
   }
-  useEffect(() => {
-    dispatch(getTasksAsync())
-  }, [])
+  const editTask=(text,status)=>{
+    dispatch(editTaskAsync(text,status))
+  }
+
   return (
     <Router>
     <div className="App">
     <NavBar isLogin={isLogin} logMeOut={logMeOut}/>
     <Switch>
       <Route path="/" exact>
-        <CardList />
+        <CardList  />
           <Pagination currentPage={page} setPage={setPage} itemsTotal={itemsTotal}/>
             </Route>
           <Route path="/taskEdit">
-            <TaskEdit createTask={createTask} />
+            <AddTask createTask={createTask} />
           </Route>
           <Route path="/logIn">
-            <LogIn logIn={logIn}   />
+            <LogInForm logIn={logIn}   />
           </Route>
+          <Route path="/task/:id" render={(props)=> (
+        <EditTask {...props}   items={{items}} />
+        )} /> 
         </Switch>
     </div>
     </Router> 

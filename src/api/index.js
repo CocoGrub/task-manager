@@ -37,8 +37,13 @@ const CREATE_TASK=(data)=>{
         .catch((err)=>err)
 }
 
-const EDIT_TASK=(id,token,text,status)=> {
-    return create_instance(1).post(`/edit/${id}?${developer}`,{token,text,status})
+const EDIT_TASK=(data)=> {
+    const {id} = data
+    const formData=new FormData()
+    for(let i =0;i<Object.keys(data).length;i++){
+        formData.append(`${Object.keys(data)[i]}`,`${data[Object.keys(data)[i]]}`)
+    }
+    return create_instance(1).post(`/edit/${id}?${developer}`,formData)
         .then((res) => {
             return res.data
         })

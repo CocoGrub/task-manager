@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-const TaskEdit = ({ usernameP, emailP, textP, createTask }) => {
+const AddTask = ({ usernameP, emailP, textP, createTask }) => {
   const [form, setFormdata] = useState({
     username: usernameP || '',
     email: emailP || '',
@@ -18,43 +18,43 @@ const TaskEdit = ({ usernameP, emailP, textP, createTask }) => {
   return (
     <div>
       <form onSubmit={onSubmit}>
-        <div class="form-group">
-          <label for="username">Имя пользователя</label>
+        <div className="form-group">
+          <label htmlFor="username">Имя пользователя</label>
           <input
             value={username}
             onChange={onChange}
             type="text"
-            class="form-control"
+            className="form-control"
             name="username"
             aria-describedby="username"
             placeholder="Enter username"
           />
         </div>
-        <div class="form-group">
-          <label for="email">Почтовый адресс</label>
+        <div className="form-group">
+          <label htmlFor="email">Почтовый адресс</label>
           <input
             value={email}
             onChange={onChange}
             type="email"
-            class="form-control"
+            className="form-control"
             name="email"
             aria-describedby="email"
             placeholder="Введите почтовый адресс"
           />
         </div>
-        <div class="form-group">
-          <label for="text">Сообщение</label>
+        <div className="form-group">
+          <label htmlFor="text">Сообщение</label>
           <input
             value={text}
             onChange={onChange}
             type="text"
-            class="form-control"
+            className="form-control"
             name="text"
             aria-describedby="text"
             placeholder="text"
           />
         </div>
-        <button type="submit" class="btn btn-primary">
+        <button type="submit" className="btn btn-primary">
           Отправить
         </button>
       </form>
@@ -62,4 +62,4 @@ const TaskEdit = ({ usernameP, emailP, textP, createTask }) => {
   );
 };
 
-export default TaskEdit;
+export default AddTask;

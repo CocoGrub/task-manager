@@ -8,7 +8,7 @@ const inintialState = {
     isLogin:false,
     total_task_count:0,
     items: [
-    { email:'',text:'',status:'' },
+    {username:'', email:'',text:'',status:'',id:'' },
   ],
   filter:{
     sort_field:'id',
