@@ -11,9 +11,9 @@ const inintialState = {
     {username:'', email:'',text:'',status:'',id:'' },
   ],
   filter:{
-    sort_field:'id',
-    sort_direction:'desc',
-    page:1
+    id: 'desc',
+    email: 'desc',
+    status: 'desc',
   }
 };
 

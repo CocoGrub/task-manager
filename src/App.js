@@ -51,7 +51,8 @@ function App(props) {
   return (
     <div className="App">
     <NavBar isLogin={isLogin} logMeOut={logMeOut}/>
-    <Switch>
+    <div class="container-lg" style={{display:'flex',flexDirection:'column',marginTop:'2em'}}>
+  <Switch>
       <Route path="/" exact>
         <CardList  />
           <Pagination currentPage={page} setPage={setPage} itemsTotal={itemsTotal}/>
@@ -66,6 +67,7 @@ function App(props) {
         <EditTask {...props}   editTask={editTask} />
         )} /> 
         </Switch>
+        </div>
     </div>
     
   );
