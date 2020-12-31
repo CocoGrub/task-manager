@@ -9,16 +9,17 @@ import AddTask from './components/AddTask'
 import EditTask from './components/EditTask'
 import LogInForm from './components/LogInForm'
 import {
-  BrowserRouter as Router,
   Switch,
   Route,
+  withRouter 
 } from "react-router-dom";
 
-function App() {
+function App(props) {
   const dispatch = useDispatch()
   useEffect(() => {
+    console.log('rerender');
     dispatch(getTasksAsync())
-  }, [])
+  },[props.history.location.pathname])
   const itemsTotal = useSelector(state => state.total_task_count)
   const isLogin = useSelector(state => state.isLogin)
   const items = useSelector((state) => state.items);
@@ -42,12 +43,12 @@ function App() {
   const logMeOut=()=>{
     dispatch(logOut())
   }
-  const editTask=(text,status)=>{
-    dispatch(editTaskAsync(text,status))
+  const editTask=(id,text,status)=>{
+    dispatch(editTaskAsync(id,text,status))
+    
   }
 
   return (
-    <Router>
     <div className="App">
     <NavBar isLogin={isLogin} logMeOut={logMeOut}/>
     <Switch>
@@ -62,12 +63,12 @@ function App() {
             <LogInForm logIn={logIn}   />
           </Route>
           <Route path="/task/:id" render={(props)=> (
-        <EditTask {...props}   items={{items}} />
+        <EditTask {...props}   editTask={editTask} />
         )} /> 
         </Switch>
     </div>
-    </Router> 
+    
   );
 }
 
-export default App;
+export default withRouter(App);

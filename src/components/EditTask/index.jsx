@@ -4,14 +4,16 @@ const EditTask = (props) => {
   const [formData, setFormData] = useState({
     ...props.location.state,
   });
-  console.log(formData);
-  const { username, email, text, status } = formData;
+
+  const { username, email, text, status, id } = formData;
 
   const onChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
   const onSubmit = (e) => {
     e.preventDefault();
+    props.editTask(id, text, status);
+    props.history.push('/');
   };
 
   return (
@@ -43,15 +45,6 @@ const EditTask = (props) => {
             onChange={onChange}
             className="custom-select custom-select-lg mb-3">
             <option value="0">0</option>
-            <option value="1">1</option>
-            <option value="2">2</option>
-            <option value="3">3</option>
-            <option value="4">4</option>
-            <option value="5">5</option>
-            <option value="6">6</option>
-            <option value="7">7</option>
-            <option value="8">8</option>
-            <option value="9">9</option>
             <option value="10">10</option>
           </select>
         </div>

@@ -49,10 +49,12 @@ export const logOut=()=>(dispatch)=>{
     })
 }
 
-export const editTaskAsync=(text,status)=>async(dispatch)=>{
+export const editTaskAsync=(id,text,status)=>async(dispatch)=>{
+    console.log(status);
     try {
         const res = await EDIT_TASK({
             token:localStorage.getItem("token"),
+            id,
             text,
             status
         })

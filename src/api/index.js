@@ -38,6 +38,7 @@ const CREATE_TASK=(data)=>{
 }
 
 const EDIT_TASK=(data)=> {
+
     const {id} = data
     const formData=new FormData()
     for(let i =0;i<Object.keys(data).length;i++){
