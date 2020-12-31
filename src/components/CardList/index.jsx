@@ -1,15 +1,13 @@
+import { useSelector } from 'react-redux';
 import React from 'react';
 import Card from '../Card';
 
-const arr = Array(10)
-  .fill(0)
-  .map((_, i) => i);
-
 const CardList = () => {
+  const items = useSelector((state) => state.items);
   return (
-    <div>
-      {arr.map((item) => (
-        <Card />
+    <div className="row">
+      {items.map((item, i) => (
+        <Card key={i} {...item} />
       ))}
     </div>
   );

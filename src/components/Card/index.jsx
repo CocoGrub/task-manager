@@ -1,18 +1,16 @@
 import React from 'react';
 
-const Card = () => {
+const Card = ({ email, id, status, text, username }) => {
   return (
-    <div class="col-sm-6">
-      <div class="card">
-        <div class="card-body">
-          <div class="card-title">
-            <h4>Name</h4>
-            <h6>e-mail</h6>
+    <div className="col-sm-4 ">
+      <div className="card">
+        <div className="card-body">
+          <div className="card-title">
+            <h4>{username}</h4>
+            <h6>{email}</h6>
           </div>
-          <p class="card-text">
-            With supporting text below as a natural lead-in to additional content.
-          </p>
-          <div class="float-right">status OK</div>
+          <p className="card-text">{text}</p>
+          <div className="float-right">{status}</div>
         </div>
       </div>
     </div>
@@ -20,8 +18,3 @@ const Card = () => {
 };
 
 export default Card;
-
-// имени пользователя;
-// е-mail;
-// текста задачи;
-// статус задачи;
