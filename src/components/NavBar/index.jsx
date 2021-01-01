@@ -9,13 +9,19 @@ const NavBar = ({ isLogin, logMeOut }) => {
     setFilterState(filter);
   }, []);
   const onChange = (e) => {
-    setFilterState({ ...filterState, [e.target.name]: e.target.name });
+    setFilterState({ ...filterState, [e.target.name]: e.target.value });
   };
+  const [show, setShow] = useState(false);
+  const showDropDown = () => {
+    setShow(!show);
+  };
+  const { id, username, email, status } = filterState;
+
   return (
     <nav className="navbar navbar-expand-lg navbar-light bg-light">
       <div className="container-fluid">
         <NavLink to="/" className="navbar-brand">
-          Home
+          На главную
         </NavLink>
         <button
           className="navbar-toggler"
@@ -55,18 +61,72 @@ const NavBar = ({ isLogin, logMeOut }) => {
                 </div>
               </li>
             )}
-            <li className="nav-item" style={{ display: 'flex', alignItems: 'center' }}>
-              <label htmlfor="sort_field" style={{ margin: '0 2px' }}>
+            <li className="nav-item dropdown show">
+              <button
+                onClick={showDropDown}
+                className="btn btn-secondary dropdown-toggle"
+                href="#"
+                id="navbarDropdown"
+                type="button"
+                data-toggle="dropdown"
+                aria-haspopup="true"
+                aria-expanded="true">
                 Сортировка
-              </label>
-              <select name="sort_field" className="custom-select" id="inputGroupSelect01">
-                <option value="desk"> По имени ↓</option>
-                <option value="asc">По имени ↑</option>
-                <option value="desk"> По email ↓</option>
-                <option value="asc"> По email ↑</option>
-                <option value="desk">По статусу ↓</option>
-                <option value="asc"> По статусу ↑</option>
-              </select>
+              </button>
+              <div
+                className={show ? 'dropdown-menu show' : 'dropdown-menu'}
+                aria-labelledby="navbarDropdown">
+                <button
+                  name={'username'}
+                  value={'desc'}
+                  onClick={onChange}
+                  className="dropdown-item"
+                  href="#">
+                  По имени ↓
+                </button>
+                <button
+                  name={'username'}
+                  value={'asc'}
+                  onClick={onChange}
+                  className="dropdown-item"
+                  href="#">
+                  По имени ↑
+                </button>
+                <div className="dropdown-divider"></div>
+                <button
+                  name={'email'}
+                  value={'desc'}
+                  onClick={onChange}
+                  className="dropdown-item"
+                  href="#">
+                  По email ↓
+                </button>
+                <button
+                  name={'email'}
+                  value={'asc'}
+                  onClick={onChange}
+                  className="dropdown-item"
+                  href="#">
+                  По email ↑
+                </button>
+                <div className="dropdown-divider"></div>
+                <button
+                  name={'status'}
+                  value={'desc'}
+                  onClick={onChange}
+                  className="dropdown-item"
+                  href="#">
+                  По статусу ↓
+                </button>
+                <button
+                  name={'status'}
+                  value={'asc'}
+                  onClick={onChange}
+                  className="dropdown-item"
+                  href="#">
+                  По статусу ↑
+                </button>
+              </div>
             </li>
           </ul>
         </div>

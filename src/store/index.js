@@ -12,8 +12,6 @@ const inintialState = {
   ],
   filter:{
     id: 'desc',
-    email: 'desc',
-    status: 'desc',
   }
 };
 

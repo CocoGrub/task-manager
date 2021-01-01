@@ -17,7 +17,6 @@ import {
 function App(props) {
   const dispatch = useDispatch()
   useEffect(() => {
-    console.log('rerender');
     dispatch(getTasksAsync())
   },[props.history.location.pathname])
   const itemsTotal = useSelector(state => state.total_task_count)
