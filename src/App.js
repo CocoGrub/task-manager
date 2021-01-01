@@ -15,14 +15,21 @@ import {
 } from "react-router-dom";
 
 function App(props) {
+  const filterOptions=useSelector(state=>state.filter)
+  const currentPage=useSelector(state=>state.currentPage)
+  const sort_field=Object.keys(filterOptions)[0]
+  const sort_direction=filterOptions[sort_field]
+
   const dispatch = useDispatch()
+
   useEffect(() => {
-    dispatch(getTasksAsync())
-  },[props.history.location.pathname])
+    dispatch(getTasksAsync(sort_field,sort_direction,currentPage))
+  },[dispatch,props.history.location.pathname,filterOptions])
+
   const itemsTotal = useSelector(state => state.total_task_count)
   const isLogin = useSelector(state => state.isLogin)
   const items = useSelector((state) => state.items);
-  const {sort_field,sort_direction,page} = useSelector(state => state.filter)
+
   const setPage=(page)=>{
     dispatch(getTasksAsync(sort_field,sort_direction,page))
   }
@@ -50,11 +57,11 @@ function App(props) {
   return (
     <div className="App">
     <NavBar isLogin={isLogin} logMeOut={logMeOut}/>
-    <div class="container-lg" style={{display:'flex',flexDirection:'column',marginTop:'2em'}}>
+    <div className="container-lg" style={{display:'flex',flexDirection:'column',marginTop:'2em'}}>
   <Switch>
       <Route path="/" exact>
         <CardList  />
-          <Pagination currentPage={page} setPage={setPage} itemsTotal={itemsTotal}/>
+          <Pagination currentPage={currentPage} setPage={setPage} itemsTotal={itemsTotal}/>
             </Route>
           <Route path="/taskEdit">
             <AddTask createTask={createTask} />

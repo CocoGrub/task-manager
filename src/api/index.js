@@ -22,7 +22,7 @@ const LOGIN=(data)=> {
         .catch((err)=>err)
 }
 
-const GET_TASKS= (sort_field='id' ,sort_direction='desc',page='1')=>{ 
+const GET_TASKS= (sort_field='id' ,sort_direction='desc',page='1')=>{
     return create_instance().get(`?${developer}&sort_field=${sort_field}&sort_direction=${sort_direction}&page=${page}`)
         .then((res)=>res)
         .catch((err)=>err)}
@@ -38,7 +38,6 @@ const CREATE_TASK=(data)=>{
 }
 
 const EDIT_TASK=(data)=> {
-
     const {id} = data
     const formData=new FormData()
     for(let i =0;i<Object.keys(data).length;i++){

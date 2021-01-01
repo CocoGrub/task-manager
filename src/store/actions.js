@@ -1,6 +1,7 @@
 import {GET_TASKS,CREATE_TASK,LOGIN,EDIT_TASK} from '../api/'
 
 export const getTasksAsync= (sort_field,sort_direction,page)=>async(dispatch)=>{
+    console.log(sort_field,sort_direction,page)
     try {
         const res = await GET_TASKS(sort_field,sort_direction,page)
         dispatch({
@@ -50,7 +51,6 @@ export const logOut=()=>(dispatch)=>{
 }
 
 export const editTaskAsync=(id,text,status)=>async(dispatch)=>{
-    console.log(status);
     try {
         const res = await EDIT_TASK({
             token:localStorage.getItem("token"),
@@ -61,4 +61,11 @@ export const editTaskAsync=(id,text,status)=>async(dispatch)=>{
     } catch (error) {
         
     }
+}
+export const SetFilter=(filter)=>async(dispatch)=>{
+    dispatch({
+        type:'SET_FILTER',
+        payload:filter
+    })
+   
 }

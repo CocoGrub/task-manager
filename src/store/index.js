@@ -3,7 +3,8 @@ import { createStore,applyMiddleware} from 'redux';
 import thunk from 'redux-thunk';
 
 
-const inintialState = {
+const initialState = {
+    currentPage:1,
     loginError:false,
     isLogin:false,
     total_task_count:0,
@@ -11,13 +12,13 @@ const inintialState = {
     {username:'', email:'',text:'',status:'',id:'' },
   ],
   filter:{
-    id: 'desc',
+    name: 'desc',
   }
 };
 
 
 //reducer
-const tasksList = (state = inintialState, { type, payload }) => {
+const tasksList = (state = initialState, { type, payload }) => {
   switch (type) {
     case 'LOAD_TASKS':
       return {
@@ -28,7 +29,7 @@ const tasksList = (state = inintialState, { type, payload }) => {
       return {
         ...state,
         items: payload.tasks,
-        filter: {...state.filter,page:payload.page} }
+        filter: {...state.filter,currentPage:payload.page} }
     case 'LOGIN':
       return {
         ...state,
@@ -43,6 +44,10 @@ const tasksList = (state = inintialState, { type, payload }) => {
       return {
         ...state,
         loginError:true}
+    case 'SET_FILTER':
+      return {
+        ...state,
+        filter:payload}
     default:
       return state;
   }

@@ -1,21 +1,19 @@
 import React, { useState, useEffect } from 'react';
+import { SetFilter } from '../../store/actions';
 import { NavLink } from 'react-router-dom';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 const NavBar = ({ isLogin, logMeOut }) => {
-  const filter = useSelector((state) => state.filter);
-  const [filterState, setFilterState] = useState('');
-  useEffect(() => {
-    setFilterState(filter);
-  }, []);
+  const dispatch = useDispatch();
+
   const onChange = (e) => {
-    setFilterState({ ...filterState, [e.target.name]: e.target.value });
+    dispatch(SetFilter({ [e.target.name]: e.target.value }));
+    setShow(!show);
   };
   const [show, setShow] = useState(false);
   const showDropDown = () => {
     setShow(!show);
   };
-  const { id, username, email, status } = filterState;
 
   return (
     <nav className="navbar navbar-expand-lg navbar-light bg-light">
