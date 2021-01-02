@@ -1,7 +1,8 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
-const Card = ({ email, id, status, text, username, isLogin }) => {
+const Task = ({ email, id, status, text, username, isLogin }) => {
+
   return (
     <div className="col-sm-4 ">
       <div className="card">
@@ -10,8 +11,12 @@ const Card = ({ email, id, status, text, username, isLogin }) => {
             <h4>{username}</h4>
             <h6>{email}</h6>
           </div>
-          <p className="card-text">{text}</p>
-          <div className="float-right">{status}</div>
+          <p className="card-text">{text.edited?text.edited:text.original}</p>
+          <div className="float-right">
+          {status>0&&<span className="badge badge-success">Выполнено</span>}
+          <br/>
+          {text.edited&& <span className="badge badge-secondary">Изменен</span>}
+          </div>
           {isLogin && (
             <Link
               className="btn btn-primary"
@@ -28,4 +33,4 @@ const Card = ({ email, id, status, text, username, isLogin }) => {
   );
 };
 
-export default Card;
+export default Task;

@@ -7,7 +7,7 @@ const create_instance=(header_required)=>{
     const instance = axios.create({
         baseURL : URL
     })
-    // if(header_required)instance.defaults.headers.common['mimeType'] = "multipart/form-data";
+    if(header_required)instance.defaults.headers.common['Content-Type'] = "multipart/form-data";
     return instance
 }
 
@@ -17,7 +17,8 @@ const LOGIN=(data)=> {
         formData.append(`${Object.keys(data)[i]}`,`${data[Object.keys(data)[i]]}`)
     }
     return create_instance(1).post(`/login?${developer}`,formData)
-        .then((res)=>{localStorage.setItem("token",res.data.message.token)
+        .then((res)=>{
+            if(res.data.message.token!==undefined)localStorage.setItem("token",res.data.message.token)
             return res.data.status})
         .catch((err)=>err)
 }
@@ -28,22 +29,19 @@ const GET_TASKS= (sort_field='id' ,sort_direction='desc',page='1')=>{
         .catch((err)=>err)}
 
 const CREATE_TASK=(data)=>{
-    const formData=new FormData()
-    for(let i =0;i<Object.keys(data).length;i++){
-        formData.append(`${Object.keys(data)[i]}`,`${data[Object.keys(data)[i]]}`)
-    }
-    return create_instance(1).post(`/create?${developer}`,formData)
+    return create_instance(1).post(`/create?${developer}`,data)
         .then((res)=>res)
         .catch((err)=>err)
 }
 
-const EDIT_TASK=(data)=> {
-    const {id} = data
-    const formData=new FormData()
-    for(let i =0;i<Object.keys(data).length;i++){
-        formData.append(`${Object.keys(data)[i]}`,`${data[Object.keys(data)[i]]}`)
-    }
-    return create_instance(1).post(`/edit/${id}?${developer}`,formData)
+const EDIT_TASK=({token,id,text,status})=> {
+    const formData=new FormData();
+    formData.set("token",token)
+    formData.set("text",text)
+    formData.set("status",status)
+
+    console.log(token)
+       return create_instance(1).post(`/edit/${id}?${developer}`, formData)
         .then((res) => {
             return res.data
         })

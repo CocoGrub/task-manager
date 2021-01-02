@@ -1,6 +1,9 @@
 import React, { useState } from 'react';
+import {useDispatch} from "react-redux";
+import {createTaskAsync} from "../../store/actions";
 
-const AddTask = ({ usernameP, emailP, textP, createTask }) => {
+const AddTask = ({history, usernameP, emailP, textP }) => {
+  const dispatch=useDispatch()
   const [form, setFormdata] = useState({
     username: usernameP || '',
     email: emailP || '',
@@ -13,14 +16,23 @@ const AddTask = ({ usernameP, emailP, textP, createTask }) => {
 
   const onSubmit = (e) => {
     e.preventDefault();
-    createTask(form);
+    const formData=new FormData()
+    formData.set('username', username);
+    formData.set('email', email);
+    formData.set('text', JSON.stringify({original: text}));
+    dispatch(createTaskAsync(formData))
+    history.push('/')
+    alert('Задача была успешно создана')
   };
+
+
+
   return (
     <div>
       <form onSubmit={onSubmit}>
         <div className="form-group">
           <label htmlFor="username">Имя пользователя</label>
-          <input
+          <input required
             value={username}
             onChange={onChange}
             type="text"
@@ -33,6 +45,7 @@ const AddTask = ({ usernameP, emailP, textP, createTask }) => {
         <div className="form-group">
           <label htmlFor="email">Почтовый адресс</label>
           <input
+              required
             value={email}
             onChange={onChange}
             type="email"
@@ -45,6 +58,7 @@ const AddTask = ({ usernameP, emailP, textP, createTask }) => {
         <div className="form-group">
           <label htmlFor="text">Сообщение</label>
           <input
+              required
             value={text}
             onChange={onChange}
             type="text"

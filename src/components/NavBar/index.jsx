@@ -29,36 +29,20 @@ const NavBar = ({ isLogin, logMeOut }) => {
           aria-controls="navbarNav"
           aria-expanded="false"
           aria-label="Toggle navigation">
-          <span className="navbar-toggler-icon"></span>
+          <span className="navbar-toggler-icon"/>
         </button>
         <div className="collapse navbar-collapse" id="navbarNav">
           <ul className="navbar-nav">
             <li className="nav-item">
               <NavLink
-                to="/taskEdit"
+                to="/createTask"
                 activeClassName="active"
                 className="nav-link"
                 aria-current="page">
                 Добавить задачу
               </NavLink>
             </li>
-            {!isLogin ? (
-              <li className="nav-item">
-                <NavLink
-                  to="/logIn"
-                  activeClassName="active"
-                  className="nav-link"
-                  aria-current="page">
-                  Войти
-                </NavLink>
-              </li>
-            ) : (
-              <li className="nav-item">
-                <div className="nav-link" onClick={logMeOut}>
-                  Выйти
-                </div>
-              </li>
-            )}
+
             <li className="nav-item dropdown show">
               <button
                 onClick={showDropDown}
@@ -90,7 +74,7 @@ const NavBar = ({ isLogin, logMeOut }) => {
                   href="#">
                   По имени ↑
                 </button>
-                <div className="dropdown-divider"></div>
+                <div className="dropdown-divider"/>
                 <button
                   name={'email'}
                   value={'desc'}
@@ -107,7 +91,7 @@ const NavBar = ({ isLogin, logMeOut }) => {
                   href="#">
                   По email ↑
                 </button>
-                <div className="dropdown-divider"></div>
+                <div className="dropdown-divider"/>
                 <button
                   name={'status'}
                   value={'desc'}
@@ -126,6 +110,25 @@ const NavBar = ({ isLogin, logMeOut }) => {
                 </button>
               </div>
             </li>
+          </ul>
+          <ul className="nav navbar-nav ml-auto">
+            {!isLogin ? (
+                <li className="nav-item">
+                  <NavLink
+                      to="/logIn"
+                      activeClassName="active"
+                      className="nav-link"
+                      aria-current="page">
+                    Войти
+                  </NavLink>
+                </li>
+            ) : (
+                <li className="nav-item">
+                  <div className="nav-link" onClick={logMeOut}>
+                    Выйти
+                  </div>
+                </li>
+            )}
           </ul>
         </div>
       </div>

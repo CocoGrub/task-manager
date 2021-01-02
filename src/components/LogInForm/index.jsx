@@ -1,25 +1,42 @@
-import React, { useState } from 'react';
+import React, { useState,useEffect} from 'react';
+import {Redirect} from 'react-router-dom'
+import {useDispatch, useSelector} from "react-redux";
+import {logInAsync} from '../../store/actions'
 
-const LogInForm = ({ logIn }) => {
-  const [form, setFormdata] = useState({
+
+const LogInForm = ({history,isLogin,loginError }) => {
+  const dispatch=useDispatch()
+  useEffect(()=>{
+    console.log(isLogin)
+    if( isLogin){
+      history.push('/')
+    }
+  },[isLogin])
+
+
+
+
+  const [form, setFormData] = useState({
     username: '',
     password: '',
   });
   const { username, password } = form;
   const onChange = (e) => {
-    setFormdata({ ...form, [e.target.name]: e.target.value });
+    setFormData({ ...form, [e.target.name]: e.target.value });
   };
 
-  const onSubmit = (e) => {
+  const onSubmit =(e) => {
     e.preventDefault();
-    logIn(form);
-  };
+    dispatch(logInAsync(form))
+    }
+
   return (
     <div>
       <form onSubmit={onSubmit}>
         <div className="form-group">
           <label htmlFor="username">Имя пользователя</label>
           <input
+              required
             value={username}
             onChange={onChange}
             type="text"
@@ -32,6 +49,7 @@ const LogInForm = ({ logIn }) => {
         <div className="form-group">
           <label htmlFor="email">Пароль</label>
           <input
+              required
             value={password}
             onChange={onChange}
             type="password"
@@ -45,6 +63,9 @@ const LogInForm = ({ logIn }) => {
           Отправить
         </button>
       </form>
+      {loginError && <div style={{margin:'2em 0'}} className="alert alert-danger" role="alert">
+         Пользователь или пароль не найдены
+      </div>}
     </div>
   );
 };

@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-const Pagination = ({ itemsPerPage = 3, itemsTotal, setPage, currentPage = 1 }) => {
+const Pagination = ({ itemsPerPage = 3, itemsTotal, setPage, currentPage }) => {
   let [portionNumber, setPortionNumber] = useState(1);
   let leftPortionPageNumber = (portionNumber - 1) * itemsPerPage + 1;
   let rightPortionPageNumber = portionNumber * itemsPerPage;
@@ -15,7 +15,7 @@ const Pagination = ({ itemsPerPage = 3, itemsTotal, setPage, currentPage = 1 }) 
     <div className="align-self-center" style={{ marginTop: '2em' }}>
       <ul className={'pagination'}>
         {portionNumber > 1 && (
-          <button
+          <button className={'btn btn-outline-info'}
             onClick={() => {
               setPortionNumber(portionNumber - 1);
             }}>

@@ -1,9 +1,28 @@
 import {GET_TASKS,CREATE_TASK,LOGIN,EDIT_TASK} from '../api/'
 
 export const getTasksAsync= (sort_field,sort_direction,page)=>async(dispatch)=>{
-    console.log(sort_field,sort_direction,page)
+    const htmlDecode = (input) => {
+        const doc = new DOMParser().parseFromString(input, "text/html");
+        return doc.documentElement.textContent;
+    }
     try {
         const res = await GET_TASKS(sort_field,sort_direction,page)
+        const tasks=res.data.message.tasks
+        for(let i=0;i<tasks.length;i++){
+            console.log(tasks[i].text.search(/{/))
+            if(tasks[i].text.search(/{(.*?)}/)!==-1){
+                const original=JSON.parse(htmlDecode(tasks[i].text)).original
+                const edited=JSON.parse(htmlDecode(tasks[i].text)).edited
+                res.data.message.tasks[i].text={
+                    original,
+                    edited
+                }
+            }else{
+                res.data.message.tasks[i].text={
+                    original:tasks[i].text
+                }
+            }
+        }
         dispatch({
            type : "LOAD_TASKS",
            payload :res.data.message
@@ -25,11 +44,13 @@ export const createTaskAsync= (data)=>async(dispatch)=>{
 export const logInAsync= (data)=>async(dispatch)=>{
     try {
         const res = await LOGIN(data)
-        console.log(res);
         if(res==='ok'){
             dispatch({
                 type:"LOGIN",
-                payload:true
+            })
+        }else {
+            dispatch({
+                type:'LOG_IN_ERROR'
             })
         }
     } catch (error) {
@@ -50,7 +71,7 @@ export const logOut=()=>(dispatch)=>{
     })
 }
 
-export const editTaskAsync=(id,text,status)=>async(dispatch)=>{
+export const editTaskAsync=({id, text, status})=>async(dispatch)=>{
     try {
         const res = await EDIT_TASK({
             token:localStorage.getItem("token"),

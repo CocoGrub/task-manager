@@ -5,7 +5,7 @@ import thunk from 'redux-thunk';
 
 const initialState = {
     currentPage:1,
-    loginError:false,
+    loginError:null,
     isLogin:false,
     total_task_count:0,
     items: [
@@ -24,12 +24,15 @@ const tasksList = (state = initialState, { type, payload }) => {
       return {
         ...state,
         total_task_count:payload.total_task_count,
-        items: payload.tasks }
+        items: payload.tasks,
+        currentPage:payload.page
+      }
     case 'SET_PAGE':
       return {
         ...state,
         items: payload.tasks,
-        filter: {...state.filter,currentPage:payload.page} }
+        filter: {...state.filter},
+        currentPage: payload.page}
     case 'LOGIN':
       return {
         ...state,

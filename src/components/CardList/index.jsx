@@ -1,15 +1,17 @@
 import { useSelector } from 'react-redux';
 import React from 'react';
-import Card from '../Card';
+import Task from '../Task';
+import Pagination from "../Pagination";
 
-const CardList = () => {
+const CardList = (props) => {
   const items = useSelector((state) => state.items);
   const isLogin = useSelector((state) => state.isLogin);
   return (
-    <div className="row">
+    <div className="row" style={{display:"flex"}}>
       {items.map((item, i) => (
-        <Card key={i} {...item} isLogin={isLogin} />
+        <Task key={i} {...item} isLogin={isLogin} />
       ))}
+      <Pagination currentPage={props.page} setPage={props.setPage} itemsTotal={props.itemsTotal}/>
     </div>
   );
 };
