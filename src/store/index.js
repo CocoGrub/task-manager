@@ -2,11 +2,11 @@ import { composeWithDevTools } from 'redux-devtools-extension';
 import { createStore,applyMiddleware} from 'redux';
 import thunk from 'redux-thunk';
 
-
 const initialState = {
     currentPage:1,
     loginError:null,
     isLogin:false,
+    task_created:false,
     total_task_count:0,
     items: [
     {username:'', email:'',text:'',status:'',id:'' },
@@ -16,15 +16,15 @@ const initialState = {
   }
 };
 
-
 //reducer
 const tasksList = (state = initialState, { type, payload }) => {
   switch (type) {
     case 'LOAD_TASKS':
+      console.log(payload,'page')
       return {
         ...state,
-        total_task_count:payload.total_task_count,
-        items: payload.tasks,
+        total_task_count:payload.res.data.message.total_task_count,
+        items: payload.res.data.message.tasks,
         currentPage:payload.page
       }
     case 'SET_PAGE':
@@ -33,16 +33,30 @@ const tasksList = (state = initialState, { type, payload }) => {
         items: payload.tasks,
         filter: {...state.filter},
         currentPage: payload.page}
-    case 'LOGIN':
+    case 'LOG_IN':
       return {
         ...state,
         isLogin:true,
         loginError:false
     }
+    case 'LOG_IN_ERROR_CLOSE':
+      return{
+        ...state,
+        loginError: false
+      }
     case 'LOG_OUT':
       return {
         ...state,
         isLogin:false }
+    case 'TASK_CREATED':
+      return {
+        ...state,
+        task_created:true }
+    case 'TASK_CREATED_CLOSE':
+      return {
+        ...state,
+        task_created:false
+      }
     case 'LOG_IN_ERROR':
       return {
         ...state,

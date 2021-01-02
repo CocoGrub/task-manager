@@ -1,17 +1,17 @@
 import React, { useState } from 'react';
 import {useDispatch} from "react-redux";
-import {createTaskAsync} from "../../store/actions";
+import {createTask} from "../../store/actions";
 
-const AddTask = ({history, usernameP, emailP, textP }) => {
+const AddTask = ({history}) => {
   const dispatch=useDispatch()
-  const [form, setFormdata] = useState({
-    username: usernameP || '',
-    email: emailP || '',
-    text: textP || '',
+  const [form, setForm] = useState({
+    username:'',
+    email:'',
+    text:'',
   });
   const { username, email, text } = form;
   const onChange = (e) => {
-    setFormdata({ ...form, [e.target.name]: e.target.value });
+    setForm({ ...form, [e.target.name]: e.target.value });
   };
 
   const onSubmit = (e) => {
@@ -20,9 +20,8 @@ const AddTask = ({history, usernameP, emailP, textP }) => {
     formData.set('username', username);
     formData.set('email', email);
     formData.set('text', JSON.stringify({original: text}));
-    dispatch(createTaskAsync(formData))
+    dispatch(createTask(formData))
     history.push('/')
-    alert('Задача была успешно создана')
   };
 
 
@@ -43,7 +42,7 @@ const AddTask = ({history, usernameP, emailP, textP }) => {
           />
         </div>
         <div className="form-group">
-          <label htmlFor="email">Почтовый адресс</label>
+          <label htmlFor="email">Почтовый адрес</label>
           <input
               required
             value={email}

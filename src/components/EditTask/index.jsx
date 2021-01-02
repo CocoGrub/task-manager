@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import  {editTaskAsync} from '../../store/actions'
+import  {editTask} from '../../store/actions'
 import {useDispatch, useSelector} from 'react-redux';
 const EditTask = (props) => {
   const dispatch = useDispatch()
@@ -16,14 +16,18 @@ const EditTask = (props) => {
     setFormData({...formData,status:e.target.checked?10:0})
   }
   const onSubmit = (e) => {
-    const data={
-      id:id,
-      status:formData.status,
-      text:JSON.stringify({original: text.original,edited:text.edited})
+    e.preventDefault()
+    if(localStorage.getItem('token')){
+      const data={
+        id:id,
+        status:formData.status,
+        text:JSON.stringify({original: text.original,edited:text.edited})
+      }
+      console.log(data,'json')
+      dispatch(editTask(data))
+      props.history.push('/');
     }
-    console.log(data,'json')
-    dispatch(editTaskAsync(data))
-    props.history.push('/');
+    props.history.push('/logIn');
   };
 
   return (

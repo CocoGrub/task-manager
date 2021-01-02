@@ -1,57 +1,71 @@
-import {GET_TASKS,CREATE_TASK,LOGIN,EDIT_TASK} from '../api/'
+import {GET_TASKS,CREATE_TASK,LOG_IN,EDIT_TASK} from '../api/'
+import {createCookie, eraseCookie, readCookie} from "../utils";
 
-export const getTasksAsync= (sort_field,sort_direction,page)=>async(dispatch)=>{
+export const getTasks= (sort_field, sort_direction, page)=>async(dispatch)=>{
     const htmlDecode = (input) => {
         const doc = new DOMParser().parseFromString(input, "text/html");
         return doc.documentElement.textContent;
     }
     try {
-        const res = await GET_TASKS(sort_field,sort_direction,page)
-        const tasks=res.data.message.tasks
+        const responseData = await GET_TASKS(sort_field,sort_direction,page)
+        const tasks=responseData.res.data.message.tasks
         for(let i=0;i<tasks.length;i++){
-            console.log(tasks[i].text.search(/{/))
             if(tasks[i].text.search(/{(.*?)}/)!==-1){
                 const original=JSON.parse(htmlDecode(tasks[i].text)).original
                 const edited=JSON.parse(htmlDecode(tasks[i].text)).edited
-                res.data.message.tasks[i].text={
+                responseData.res.data.message.tasks[i].text={
                     original,
                     edited
                 }
             }else{
-                res.data.message.tasks[i].text={
+                responseData.res.data.message.tasks[i].text={
                     original:tasks[i].text
                 }
             }
         }
         dispatch({
            type : "LOAD_TASKS",
-           payload :res.data.message
+           payload : responseData
         })
     } catch (error) {
         console.log(error);
     }   
 }
     
-export const createTaskAsync= (data)=>async(dispatch)=>{
+export const createTask= (data)=>async(dispatch)=>{
     try {
-        const res = await CREATE_TASK(data)
-        console.log(res);
+        await CREATE_TASK(data)
+        dispatch({
+            type:'TASK_CREATED'
+        })
+        setTimeout(()=>{
+            dispatch({type:'TASK_CREATED_CLOSE'})
+        },3000)
+
     } catch (error) {
         console.log(error);
     }   
 }
    
-export const logInAsync= (data)=>async(dispatch)=>{
+export const LogIN= (params)=>async(dispatch)=>{
     try {
-        const res = await LOGIN(data)
-        if(res==='ok'){
+        const data = await LOG_IN(params)
+        if(data.status==='ok'){
             dispatch({
-                type:"LOGIN",
+                type:"LOG_IN",
             })
-        }else {
+            if(data.message.token!==undefined){
+                localStorage.setItem("token",data.message.token)
+                createCookie('token', data.message.token, 86400);
+            }
+            }
+        else {
             dispatch({
                 type:'LOG_IN_ERROR'
             })
+            setTimeout(()=>{
+                dispatch({type:'LOG_IN_ERROR_CLOSE'})
+            },3000)
         }
     } catch (error) {
         console.log(error);
@@ -59,19 +73,30 @@ export const logInAsync= (data)=>async(dispatch)=>{
 }
     
 
-export const relogIn=()=>(dispatch)=>{
+export const reLogin=()=>(dispatch)=>{
+    const localToken = localStorage.getItem("token");
+    if (!localToken) {
+        const cookieToken = readCookie('token')
+        if(cookieToken){
+            localStorage.setItem("token",cookieToken)
+            dispatch({
+                type:"LOG_IN"
+            })
+        }
+    }
     dispatch({
-        type:"LOGIN"
+        type:"LOG_IN"
     })
 }
-export const logOut=()=>(dispatch)=>{
+export const LogOUT=()=>(dispatch)=>{
     localStorage.removeItem("token")
+    eraseCookie('token');
     dispatch({
         type:"LOG_OUT"
     })
 }
 
-export const editTaskAsync=({id, text, status})=>async(dispatch)=>{
+export const editTask=({id, text, status})=>async(dispatch)=>{
     try {
         const res = await EDIT_TASK({
             token:localStorage.getItem("token"),

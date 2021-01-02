@@ -1,7 +1,7 @@
 import React, { useState,useEffect} from 'react';
 import {Redirect} from 'react-router-dom'
 import {useDispatch, useSelector} from "react-redux";
-import {logInAsync} from '../../store/actions'
+import {LogIN} from '../../store/actions'
 
 
 const LogInForm = ({history,isLogin,loginError }) => {
@@ -27,7 +27,7 @@ const LogInForm = ({history,isLogin,loginError }) => {
 
   const onSubmit =(e) => {
     e.preventDefault();
-    dispatch(logInAsync(form))
+    dispatch(LogIN(form))
     }
 
   return (

@@ -11,21 +11,22 @@ const create_instance=(header_required)=>{
     return instance
 }
 
-const LOGIN=(data)=> {
+const LOG_IN=(data)=> {
     const formData=new FormData()
     for(let i =0;i<Object.keys(data).length;i++){
         formData.append(`${Object.keys(data)[i]}`,`${data[Object.keys(data)[i]]}`)
     }
     return create_instance(1).post(`/login?${developer}`,formData)
         .then((res)=>{
-            if(res.data.message.token!==undefined)localStorage.setItem("token",res.data.message.token)
-            return res.data.status})
+            return res.data})
         .catch((err)=>err)
 }
 
 const GET_TASKS= (sort_field='id' ,sort_direction='desc',page='1')=>{
     return create_instance().get(`?${developer}&sort_field=${sort_field}&sort_direction=${sort_direction}&page=${page}`)
-        .then((res)=>res)
+        .then((res)=> {
+            return {res,page}
+        })
         .catch((err)=>err)}
 
 const CREATE_TASK=(data)=>{
@@ -39,12 +40,10 @@ const EDIT_TASK=({token,id,text,status})=> {
     formData.set("token",token)
     formData.set("text",text)
     formData.set("status",status)
-
-    console.log(token)
        return create_instance(1).post(`/edit/${id}?${developer}`, formData)
         .then((res) => {
             return res.data
         })
 }
 
-export {LOGIN,GET_TASKS,CREATE_TASK,EDIT_TASK}
+export {LOG_IN,GET_TASKS,CREATE_TASK,EDIT_TASK}
