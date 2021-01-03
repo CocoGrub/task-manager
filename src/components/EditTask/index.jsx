@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 import {useDispatch} from 'react-redux';
-import {editTask} from '../../store/actions'
+import {editTask, EditTaskError, LogOUT} from '../../store/actions'
 
 const EditTask = (props) => {
   const dispatch = useDispatch()
@@ -17,6 +17,12 @@ const EditTask = (props) => {
   }
   const onSubmit = (e) => {
     e.preventDefault()
+    if(!localStorage.getItem('token')){
+      dispatch(LogOUT())
+      props.history.push('/logIn')
+      dispatch(EditTaskError())
+    }else {
+      console.log('aa')
       const data={
         id:id,
         status:formData.status,
@@ -24,6 +30,8 @@ const EditTask = (props) => {
       }
       dispatch(editTask(data))
       props.history.push('/');
+    }
+
   };
 
   return (

@@ -5,6 +5,7 @@ import {LogIN} from '../../store/actions'
 const LogInForm = ({history}) => {
   const dispatch=useDispatch()
   const isLogin= useSelector(state=>state.isLogin)
+  const createTaskError= useSelector(state=>state.createTaskError)
   const loginError= useSelector(state=>state.loginError)
   //если залогинены изначально, или залогинились после успешной попытки, редиректим на главную
   useEffect(()=>{
@@ -62,6 +63,9 @@ const LogInForm = ({history}) => {
       </form>
       {loginError && <div style={{margin:'2em 0'}} className="alert alert-danger" role="alert">
          Пользователь или пароль не найдены
+      </div>}
+      {createTaskError && <div style={{margin:'2em 0'}} className="alert alert-warning" role="alert">
+        Вы не залогинены!
       </div>}
     </div>
   );

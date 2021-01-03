@@ -6,6 +6,7 @@ const initialState = {
     currentURL:'',
     currentPage:1,
     loginError:null,
+    createTaskError:false,
     isLogin:false,
     task_created:false,
     total_task_count:0,
@@ -65,6 +66,11 @@ const tasksList = (state = initialState, { type, payload }) => {
       return {
         ...state,
         loginError:true}
+    case 'EDIT_TASK_ERROR':
+      return {
+        ...state,
+        createTaskError:!state.createTaskError
+      }
     case 'SET_FILTER':
       return {
         ...state,

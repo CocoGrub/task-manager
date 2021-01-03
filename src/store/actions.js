@@ -102,7 +102,6 @@ export const editTask=({id, text, status})=>async()=>{
             status
         })
     } catch (error) {
-        
     }
 }
 export const SetFilter=(filter)=>async(dispatch)=>{
@@ -110,5 +109,14 @@ export const SetFilter=(filter)=>async(dispatch)=>{
         type:'SET_FILTER',
         payload:filter
     })
-   
+}
+export const EditTaskError=()=>(dispatch)=>{
+    dispatch({
+        type:'EDIT_TASK_ERROR'
+    })
+    setTimeout(()=>{
+        dispatch({
+            type:'EDIT_TASK_ERROR'
+        })
+    },3000)
 }
