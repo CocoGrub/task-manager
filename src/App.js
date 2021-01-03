@@ -7,14 +7,22 @@ import {useDispatch} from 'react-redux'
 import AddTask from './components/CreateTask'
 import EditTask from './components/EditTask'
 import LogInForm from './components/LogInForm'
-import {Switch,Route,withRouter}from "react-router-dom";
+import {Switch,Route,withRouter,useLocation}from "react-router-dom";
 import ProtectedRoute from "./components/ProtectedRoute";
 
 function App() {
   const dispatch = useDispatch()
+  const location = useLocation();
   useEffect(() => {
       dispatch(reLogin())
   }, [dispatch]);
+
+  useEffect(()=>{
+      dispatch({
+          type:'SET_CURRENT_URL',
+          payload:location.pathname
+      })
+  },[location.pathname,dispatch])
 
   return (
     <div className="App">

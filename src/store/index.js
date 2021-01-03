@@ -3,6 +3,7 @@ import { createStore,applyMiddleware} from 'redux';
 import thunk from 'redux-thunk';
 
 const initialState = {
+    currentURL:'',
     currentPage:1,
     loginError:null,
     isLogin:false,
@@ -32,11 +33,7 @@ const tasksList = (state = initialState, { type, payload }) => {
         items: payload.tasks,
         filter: {...state.filter},
         currentPage: payload.page}
-    case 'SET_NEXT_PAGE':
-      return {
-        ...state,
-        currentPage: payload}
-    case 'SET_PREV_PAGE':
+    case 'SET_PAGE_NUMBER':
       return {
         ...state,
         currentPage: payload}
@@ -72,6 +69,11 @@ const tasksList = (state = initialState, { type, payload }) => {
       return {
         ...state,
         filter:payload}
+    case 'SET_CURRENT_URL':
+      return {
+        ...state,
+        currentURL:payload
+      }
     default:
       return state;
   }

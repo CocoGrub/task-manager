@@ -8,9 +8,6 @@ const Pagination = ({ itemsPerPage = 3, itemsTotal, setPage, currentPage }) => {
   const rightPortionPageNumber = portionNumber * itemsPerPage;
   const pagesCount = Math.ceil(itemsTotal / itemsPerPage);
   const pageNumbers = [];
-  console.log({
-    portionNumber,leftPortionPageNumber,rightPortionPageNumber,pagesCount,pageNumbers,currentPage
-  })
   for (let i = 1; i <= Math.ceil(itemsTotal / itemsPerPage); i++) {
     pageNumbers.push(i);
   }
@@ -22,7 +19,7 @@ const Pagination = ({ itemsPerPage = 3, itemsTotal, setPage, currentPage }) => {
           <button className={'btn btn-outline-info'}
             onClick={() => {
               dispatch({
-                type:'SET_PREV_PAGE',
+                type:'SET_PAGE_NUMBER',
                 payload:leftPortionPageNumber-1
               })
               setPortionNumber(portionNumber - 1);
@@ -51,10 +48,9 @@ const Pagination = ({ itemsPerPage = 3, itemsTotal, setPage, currentPage }) => {
             onClick={() => {
               setPortionNumber(portionNumber + 1);
               dispatch({
-                type:'SET_NEXT_PAGE',
+                type:'SET_PAGE_NUMBER',
                 payload:rightPortionPageNumber+1
               })
-
             }}>
             NEXT
           </button>
