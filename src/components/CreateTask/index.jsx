@@ -10,10 +10,10 @@ const AddTask = ({history}) => {
     text:'',
   });
   const { username, email, text } = form;
+
   const onChange = (e) => {
     setForm({ ...form, [e.target.name]: e.target.value });
   };
-
   const onSubmit = (e) => {
     e.preventDefault();
     const formData=new FormData()
@@ -23,8 +23,6 @@ const AddTask = ({history}) => {
     dispatch(createTask(formData))
     history.push('/')
   };
-
-
 
   return (
     <div>

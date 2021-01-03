@@ -1,12 +1,11 @@
-import React, { useState, useEffect } from 'react';
-import  {editTask} from '../../store/actions'
-import {useDispatch, useSelector} from 'react-redux';
+import React, {useState} from 'react';
+import {editTask} from '../../store/actions'
+import {useDispatch} from 'react-redux';
 const EditTask = (props) => {
   const dispatch = useDispatch()
   const [formData, setFormData] = useState({
     ...props.location.state,
   });
-  console.log(formData,'edit')
   const { username, email, text, status, id } = formData;
 
   const onChange = (e) => {
@@ -17,7 +16,6 @@ const EditTask = (props) => {
   }
   const onSubmit = (e) => {
     e.preventDefault()
-    if(localStorage.getItem('token')){
       const data={
         id:id,
         status:formData.status,
@@ -25,8 +23,6 @@ const EditTask = (props) => {
       }
       dispatch(editTask(data))
       props.history.push('/');
-    }
-    props.history.push('/logIn');
   };
 
   return (
@@ -58,7 +54,6 @@ const EditTask = (props) => {
             </label>
           </div>
         </div>
-
         <button type="submit" className="btn btn-primary">
           Отправить
         </button>

@@ -1,20 +1,17 @@
 import React, { useState,useEffect} from 'react';
-import {Redirect} from 'react-router-dom'
-import {useDispatch, useSelector} from "react-redux";
+import {useDispatch,useSelector} from "react-redux";
 import {LogIN} from '../../store/actions'
 
-
-const LogInForm = ({history,isLogin,loginError }) => {
+const LogInForm = ({history}) => {
   const dispatch=useDispatch()
+  const isLogin= useSelector(state=>state.isLogin)
+  const loginError= useSelector(state=>state.loginError)
+  //если залогинены изначально, или залогинились после успешной попытки, редиректим на главную
   useEffect(()=>{
-    console.log(isLogin)
-    if( isLogin){
+    if(isLogin){
       history.push('/')
     }
-  },[isLogin])
-
-
-
+  },[history,isLogin])
 
   const [form, setFormData] = useState({
     username: '',

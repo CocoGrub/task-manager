@@ -1,15 +1,18 @@
-import React, { useState, useEffect } from 'react';
-import { SetFilter } from '../../store/actions';
+import React, { useState } from 'react';
 import { NavLink } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
+import { SetFilter,LogOUT } from '../../store/actions';
 
-const NavBar = ({ isLogin, logMeOut }) => {
+const NavBar = () => {
   const dispatch = useDispatch();
-
+  const isLogin= useSelector(state=>state.isLogin)
   const onChange = (e) => {
     dispatch(SetFilter({ [e.target.name]: e.target.value }));
     setShow(!show);
   };
+  const onLogOut=()=>{
+    dispatch(LogOUT())
+  }
   const [show, setShow] = useState(false);
   const showDropDown = () => {
     setShow(!show);
@@ -46,8 +49,7 @@ const NavBar = ({ isLogin, logMeOut }) => {
             <li className="nav-item dropdown show">
               <button
                 onClick={showDropDown}
-                className="btn btn-secondary dropdown-toggle"
-                href="#"
+                className="btn btn-info dropdown-toggle"
                 id="navbarDropdown"
                 type="button"
                 data-toggle="dropdown"
@@ -63,7 +65,7 @@ const NavBar = ({ isLogin, logMeOut }) => {
                   value={'desc'}
                   onClick={onChange}
                   className="dropdown-item"
-                  href="#">
+                  >
                   По имени ↓
                 </button>
                 <button
@@ -71,7 +73,7 @@ const NavBar = ({ isLogin, logMeOut }) => {
                   value={'asc'}
                   onClick={onChange}
                   className="dropdown-item"
-                  href="#">
+                  >
                   По имени ↑
                 </button>
                 <div className="dropdown-divider"/>
@@ -80,7 +82,7 @@ const NavBar = ({ isLogin, logMeOut }) => {
                   value={'desc'}
                   onClick={onChange}
                   className="dropdown-item"
-                  href="#">
+                  >
                   По email ↓
                 </button>
                 <button
@@ -88,7 +90,7 @@ const NavBar = ({ isLogin, logMeOut }) => {
                   value={'asc'}
                   onClick={onChange}
                   className="dropdown-item"
-                  href="#">
+                  >
                   По email ↑
                 </button>
                 <div className="dropdown-divider"/>
@@ -97,7 +99,7 @@ const NavBar = ({ isLogin, logMeOut }) => {
                   value={'desc'}
                   onClick={onChange}
                   className="dropdown-item"
-                  href="#">
+                  >
                   По статусу ↓
                 </button>
                 <button
@@ -105,15 +107,15 @@ const NavBar = ({ isLogin, logMeOut }) => {
                   value={'asc'}
                   onClick={onChange}
                   className="dropdown-item"
-                  href="#">
+                  >
                   По статусу ↑
                 </button>
               </div>
             </li>
           </ul>
-          <ul className="nav navbar-nav ml-auto">
+          <ul className="nav navbar-nav ml-auto" style={{cursor:'pointer'}}>
             {!isLogin ? (
-                <li className="nav-item">
+                <li className="nav-item" >
                   <NavLink
                       to="/logIn"
                       activeClassName="active"
@@ -124,7 +126,7 @@ const NavBar = ({ isLogin, logMeOut }) => {
                 </li>
             ) : (
                 <li className="nav-item">
-                  <div className="nav-link" onClick={logMeOut}>
+                  <div className="nav-link" onClick={onLogOut}>
                     Выйти
                   </div>
                 </li>

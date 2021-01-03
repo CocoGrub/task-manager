@@ -2,7 +2,6 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 
 const Task = ({ email, id, status, text, username, isLogin }) => {
-
   return (
     <div className="col-sm-4 ">
       <div className="card">

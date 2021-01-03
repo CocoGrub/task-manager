@@ -69,6 +69,11 @@ const tasksList = (state = initialState, { type, payload }) => {
       return state;
   }
 };
+
+const getData=()=>{
+
+}
+
 const store = createStore(tasksList, composeWithDevTools(applyMiddleware(thunk)));
 
 export default store;
