@@ -4,7 +4,6 @@ import { Nav, Navbar, NavDropdown } from "react-bootstrap";
 import { useDispatch, useSelector } from 'react-redux';
 import { SetFilter,LogOUT } from '../../store/actions';
 
-
 const NavBar = () => {
   const dispatch = useDispatch();
   const isLogin= useSelector(state=>state.isLogin)
@@ -104,4 +103,5 @@ const NavBar = () => {
       </Navbar>
   );
 };
+
 export default NavBar;
