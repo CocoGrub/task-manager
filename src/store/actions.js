@@ -93,9 +93,9 @@ export const LogOUT=()=>(dispatch)=>{
     })
 }
 
-export const editTask=({id, text, status})=>async(dispatch)=>{
+export const editTask=({id, text, status})=>async()=>{
     try {
-        const res = await EDIT_TASK({
+        await EDIT_TASK({
             token:localStorage.getItem("token"),
             id,
             text,
