@@ -1,14 +1,13 @@
-import './App.css';
 import React,{useEffect} from 'react'
+import {useDispatch} from 'react-redux'
+import {Switch,Route,withRouter,useLocation}from "react-router-dom";
 import CardList from './components/TasksList';
 import NavBar from '../src/components/NavBar';
-import {reLogin} from './store/actions'
-import {useDispatch} from 'react-redux'
 import AddTask from './components/CreateTask'
 import EditTask from './components/EditTask'
 import LogInForm from './components/LogInForm'
-import {Switch,Route,withRouter,useLocation}from "react-router-dom";
 import ProtectedRoute from "./components/ProtectedRoute";
+import {reLogin} from './store/actions'
 
 function App() {
   const dispatch = useDispatch()

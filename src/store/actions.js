@@ -74,6 +74,10 @@ export const LogIN= (params)=>async(dispatch)=>{
     
 
 export const reLogin=()=>(dispatch)=>{
+    const cookieToken = readCookie('token')
+    if(cookieToken){
+        localStorage.setItem("token",cookieToken)
+    }
     const localToken = localStorage.getItem("token");
     if (localToken) {
             dispatch({

@@ -1,6 +1,7 @@
 import React, {useState} from 'react';
-import {editTask} from '../../store/actions'
 import {useDispatch} from 'react-redux';
+import {editTask} from '../../store/actions'
+
 const EditTask = (props) => {
   const dispatch = useDispatch()
   const [formData, setFormData] = useState({

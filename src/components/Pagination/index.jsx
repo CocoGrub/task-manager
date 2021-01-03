@@ -35,7 +35,7 @@ const Pagination = ({ itemsPerPage = 3, itemsTotal, setPage, currentPage }) => {
                 className={currentPage === p ? 'page-item active' : ' page-item'}
                 style={{cursor:'pointer'}}
                 key={p}
-                onClick={(e) => {
+                onClick={() => {
                   setPage(p);
                 }}>
                 <span className="page-link">{p}</span>
