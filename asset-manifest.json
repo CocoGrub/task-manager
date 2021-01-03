@@ -1,7 +1,7 @@
 {
   "files": {
-    "main.js": "/task-manager/static/js/main.04e517f1.chunk.js",
-    "main.js.map": "/task-manager/static/js/main.04e517f1.chunk.js.map",
+    "main.js": "/task-manager/static/js/main.bdcfe410.chunk.js",
+    "main.js.map": "/task-manager/static/js/main.bdcfe410.chunk.js.map",
     "runtime-main.js": "/task-manager/static/js/runtime-main.b24f98e0.js",
     "runtime-main.js.map": "/task-manager/static/js/runtime-main.b24f98e0.js.map",
     "static/css/2.43b2b750.chunk.css": "/task-manager/static/css/2.43b2b750.chunk.css",
@@ -15,6 +15,6 @@
     "static/js/runtime-main.b24f98e0.js",
     "static/css/2.43b2b750.chunk.css",
     "static/js/2.5347665e.chunk.js",
-    "static/js/main.04e517f1.chunk.js"
+    "static/js/main.bdcfe410.chunk.js"
   ]
 }
