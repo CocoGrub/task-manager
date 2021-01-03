@@ -20,7 +20,6 @@ const initialState = {
 const tasksList = (state = initialState, { type, payload }) => {
   switch (type) {
     case 'LOAD_TASKS':
-      console.log(payload,'page')
       return {
         ...state,
         total_task_count:payload.res.data.message.total_task_count,
@@ -33,6 +32,14 @@ const tasksList = (state = initialState, { type, payload }) => {
         items: payload.tasks,
         filter: {...state.filter},
         currentPage: payload.page}
+    case 'SET_NEXT_PAGE':
+      return {
+        ...state,
+        currentPage: payload}
+    case 'SET_PREV_PAGE':
+      return {
+        ...state,
+        currentPage: payload}
     case 'LOG_IN':
       return {
         ...state,
@@ -69,10 +76,6 @@ const tasksList = (state = initialState, { type, payload }) => {
       return state;
   }
 };
-
-const getData=()=>{
-
-}
 
 const store = createStore(tasksList, composeWithDevTools(applyMiddleware(thunk)));
 
