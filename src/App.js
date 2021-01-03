@@ -12,6 +12,7 @@ import {
   Route,
   withRouter 
 } from "react-router-dom";
+import ProtectedRoute from "./components/ProtectedRoute";
 
 function App(props) {
   const loginError= useSelector(state=>state.loginError)
@@ -39,9 +40,6 @@ function App(props) {
   const logMeOut=()=>{
     dispatch(LogOUT())
   }
-  const editTask=(id,text,status)=>{
-    dispatch(editTask(id,text,status))
-  }
 
   return (
     <div className="App">
@@ -54,9 +52,10 @@ function App(props) {
               <AddTask {...props} />)}/>
           <Route path="/logIn" render={(props)=> (
               <LogInForm {...props} loginError={loginError}  isLogin={isLogin} />)}/>
-          <Route path="/task/:id" render={(props)=> (
-        <EditTask {...props}   editTask={editTask} />
-        )} />
+    <ProtectedRoute path="/task/:id" component={EditTask} />
+        {/*  <Route path="/task/:id" render={(props)=> (*/}
+        {/*<EditTask {...props}   editTask={editTask} />*/}
+        {/*)} />*/}
         </Switch>
         </div>
     </div>

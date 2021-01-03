@@ -23,7 +23,6 @@ const EditTask = (props) => {
         status:formData.status,
         text:JSON.stringify({original: text.original,edited:text.edited})
       }
-      console.log(data,'json')
       dispatch(editTask(data))
       props.history.push('/');
     }

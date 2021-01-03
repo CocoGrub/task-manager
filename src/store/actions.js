@@ -75,18 +75,11 @@ export const LogIN= (params)=>async(dispatch)=>{
 
 export const reLogin=()=>(dispatch)=>{
     const localToken = localStorage.getItem("token");
-    if (!localToken) {
-        const cookieToken = readCookie('token')
-        if(cookieToken){
-            localStorage.setItem("token",cookieToken)
+    if (localToken) {
             dispatch({
                 type:"LOG_IN"
             })
         }
-    }
-    dispatch({
-        type:"LOG_IN"
-    })
 }
 export const LogOUT=()=>(dispatch)=>{
     localStorage.removeItem("token")
